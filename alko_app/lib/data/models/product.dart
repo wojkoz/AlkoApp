@@ -1,14 +1,37 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:hive_flutter/adapters.dart';
 
+part 'product.g.dart';
+
+@HiveType(typeId: 0)
 class Product extends Equatable {
-  final int id;
+  @HiveField(0)
+  final String id;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final double? price;
+
+  @HiveField(3)
   final double alcoholPercentage;
 
+  @HiveField(4)
+  final double bottleCapacity;
+
+  @HiveField(5)
+  final DateTime createdAt;
+
+  @HiveField(6)
+  final int? rate;
+
   const Product({
+    required this.bottleCapacity,
+    required this.createdAt,
+    this.rate,
     required this.id,
     required this.name,
     this.price,
@@ -16,19 +39,26 @@ class Product extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, name, alcoholPercentage, price];
+  List<Object?> get props =>
+      [id, name, alcoholPercentage, price, rate, bottleCapacity, createdAt];
 
   Product copyWith({
-    int? id,
+    String? id,
     String? name,
     double? price,
     double? alcoholPercentage,
+    double? bottleCapacity,
+    DateTime? createdAt,
+    int? rate,
   }) {
     return Product(
       id: id ?? this.id,
       name: name ?? this.name,
       price: price ?? this.price,
       alcoholPercentage: alcoholPercentage ?? this.alcoholPercentage,
+      bottleCapacity: bottleCapacity ?? this.bottleCapacity,
+      createdAt: createdAt ?? this.createdAt,
+      rate: rate ?? this.rate,
     );
   }
 
@@ -38,6 +68,9 @@ class Product extends Equatable {
       'name': name,
       'price': price,
       'alcoholPercentage': alcoholPercentage,
+      'bottleCapacity': bottleCapacity,
+      'createdAt': createdAt.millisecondsSinceEpoch,
+      'rate': rate,
     };
   }
 
@@ -47,6 +80,9 @@ class Product extends Equatable {
       name: map['name'],
       price: map['price'],
       alcoholPercentage: map['alcoholPercentage'],
+      bottleCapacity: map['bottleCapacity'],
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
+      rate: map['rate'],
     );
   }
 

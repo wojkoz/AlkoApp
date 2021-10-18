@@ -1,47 +1,58 @@
+import 'package:alko_app/business_logic/cubit/product_cubit.dart';
+import 'package:alko_app/data/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nanoid/async.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            SizedBox(
+              height: 400,
+              width: 200,
+              child: BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  if (state is ProductLoaded && state.products.isNotEmpty) {
+                    return ListView.builder(
+                        itemCount: state.products.length,
+                        itemBuilder: (context, index) =>
+                            Text(state.products[index].name));
+                  } else if (state is ProductLoading) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    context.read<ProductCubit>().getAllProducts();
+                    return const Text("init");
+                  }
+                },
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            ElevatedButton(
+                onPressed: () async {
+                  //! temporary solution. just for testing purpouse
+                  Product p = Product(
+                      bottleCapacity: 2.0,
+                      createdAt: DateTime.now(),
+                      id: await nanoid(10),
+                      name: "Test Beer",
+                      alcoholPercentage: 5.7);
+
+                  BlocProvider.of<ProductCubit>(context).saveProduct(p);
+                },
+                child: const Text("Add product")),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

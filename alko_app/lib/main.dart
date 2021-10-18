@@ -1,14 +1,15 @@
-import 'package:alko_app/presentation/routes/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
+
+import 'package:alko_app/presentation/routes/app_router.dart';
+import 'package:alko_app/utils/hive_initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initHive();
 
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
-  );
+  // HydratedBloc.storage = await HydratedStorage.build(
+  //   storageDirectory: await getApplicationDocumentsDirectory(),
+  // );
   runApp(const MyApp());
 }
 
@@ -20,12 +21,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _appRouter = const AppRouter();
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Alko check',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
