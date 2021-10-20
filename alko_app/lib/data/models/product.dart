@@ -26,7 +26,7 @@ class Product extends Equatable {
   final DateTime createdAt;
 
   @HiveField(6)
-  final int? rate;
+  final double? rate;
 
   const Product({
     required this.bottleCapacity,
@@ -49,7 +49,7 @@ class Product extends Equatable {
     double? alcoholPercentage,
     double? bottleCapacity,
     DateTime? createdAt,
-    int? rate,
+    double? rate,
   }) {
     return Product(
       id: id ?? this.id,

@@ -19,7 +19,7 @@ class ProductAdapter extends TypeAdapter<Product> {
     return Product(
       bottleCapacity: fields[4] as double,
       createdAt: fields[5] as DateTime,
-      rate: fields[6] as int?,
+      rate: fields[6] as double?,
       id: fields[0] as String,
       name: fields[1] as String,
       price: fields[2] as double?,
