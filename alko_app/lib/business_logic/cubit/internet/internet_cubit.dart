@@ -15,9 +15,9 @@ class InternetCubit extends Cubit<InternetState> {
     connectivityStreamSubscription =
         connectivity.onConnectivityChanged.listen((connectivityResult) {
       if (connectivityResult == ConnectivityResult.wifi) {
-        emitInternetConnected(ConnectionType.Wifi);
+        emitInternetConnected(ConnectionType.wifi);
       } else if (connectivityResult == ConnectivityResult.mobile) {
-        emitInternetConnected(ConnectionType.Mobile);
+        emitInternetConnected(ConnectionType.mobile);
       } else {
         emitInternetDisconnected();
       }

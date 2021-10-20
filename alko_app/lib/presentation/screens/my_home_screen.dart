@@ -1,4 +1,4 @@
-import 'package:alko_app/business_logic/cubit/product_cubit.dart';
+import 'package:alko_app/business_logic/cubit/product/product_cubit.dart';
 import 'package:alko_app/data/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

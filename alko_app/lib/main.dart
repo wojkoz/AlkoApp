@@ -1,7 +1,12 @@
+import 'package:alko_app/data/repositories/a_product_repository.dart';
+import 'package:alko_app/data/repositories/implementation/product_repository.dart';
 import 'package:flutter/material.dart';
 
 import 'package:alko_app/presentation/routes/app_router.dart';
 import 'package:alko_app/utils/hive_initializer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'business_logic/cubit/product/product_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,33 +15,28 @@ void main() async {
   // HydratedBloc.storage = await HydratedStorage.build(
   //   storageDirectory: await getApplicationDocumentsDirectory(),
   // );
-  runApp(const MyApp());
+  runApp(MyApp(
+    productRepository: ProductRepository(),
+  ));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   final _appRouter = AppRouter();
+  final AProductRepository productRepository;
+
+  MyApp({Key? key, required this.productRepository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Alko check',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => ProductCubit(productRepository: productRepository),
+      child: MaterialApp(
+        title: 'Alko check',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        onGenerateRoute: _appRouter.onGenerateRoute,
       ),
-      onGenerateRoute: _appRouter.onGenerateRoute,
     );
-  }
-
-  @override
-  void dispose() {
-    _appRouter.dispose();
-    super.dispose();
   }
 }

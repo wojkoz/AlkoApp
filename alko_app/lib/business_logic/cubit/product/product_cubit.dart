@@ -12,9 +12,7 @@ class ProductCubit extends Cubit<ProductState> {
 
   void getAllProducts() async {
     List<Product> productsList = await productRepository.getAll();
-    for (var element in productsList) {
-      print(element.toMap());
-    }
+
     emit(ProductLoaded(productsList));
   }
 
