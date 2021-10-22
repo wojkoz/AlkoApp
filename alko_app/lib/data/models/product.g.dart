@@ -19,18 +19,19 @@ class ProductAdapter extends TypeAdapter<Product> {
     return Product(
       bottleCapacity: fields[4] as double,
       createdAt: fields[5] as DateTime,
-      rate: fields[6] as double?,
+      rate: fields[6] as double,
       id: fields[0] as String,
       name: fields[1] as String,
       price: fields[2] as double?,
       alcoholPercentage: fields[3] as double,
+      type: fields[7] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Product obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class ProductAdapter extends TypeAdapter<Product> {
       ..writeByte(5)
       ..write(obj.createdAt)
       ..writeByte(6)
-      ..write(obj.rate);
+      ..write(obj.rate)
+      ..writeByte(7)
+      ..write(obj.type);
   }
 
   @override

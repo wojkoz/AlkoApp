@@ -17,25 +17,26 @@ class ProductCubit extends Cubit<ProductState> {
     emit(ProductLoaded(productsList));
   }
 
-  void saveProduct(Map<String, dynamic> productMap, double? rating) async {
+  void saveProduct(Map<String, dynamic> productMap, double rating) async {
     emit(ProductLoading());
 
     try {
       Product product = Product(
-          bottleCapacity: double.parse(productMap["Capacity"]),
-          createdAt: productMap["CreatedAt"],
-          id: await nanoid(10),
-          name: productMap["Name"],
-          alcoholPercentage: double.parse(productMap["AlcoholPercentage"]),
-          price: productMap["Price"] != null
-              ? double.parse(productMap["Price"])
-              : null,
-          rate: rating);
+        bottleCapacity: double.parse(productMap["Capacity"]),
+        createdAt: productMap["CreatedAt"],
+        id: await nanoid(10),
+        name: productMap["Name"],
+        alcoholPercentage: double.parse(productMap["AlcoholPercentage"]),
+        price: productMap["Price"] != null
+            ? double.parse(productMap["Price"])
+            : null,
+        rate: rating,
+        type: productMap["Type"],
+      );
 
       await productRepository.save(product);
       getAllProducts();
     } catch (e) {
-      print("$e : $productMap}");
       //TODO!: on error occured should emit ProductAddError state
       emit(ProductInit());
     }

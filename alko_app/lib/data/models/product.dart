@@ -26,21 +26,32 @@ class Product extends Equatable {
   final DateTime createdAt;
 
   @HiveField(6)
-  final double? rate;
+  final double rate;
 
-  const Product({
-    required this.bottleCapacity,
-    required this.createdAt,
-    this.rate,
-    required this.id,
-    required this.name,
-    this.price,
-    required this.alcoholPercentage,
-  });
+  @HiveField(7)
+  final String type;
+
+  const Product(
+      {required this.bottleCapacity,
+      required this.createdAt,
+      required this.rate,
+      required this.id,
+      required this.name,
+      this.price,
+      required this.alcoholPercentage,
+      required this.type});
 
   @override
-  List<Object?> get props =>
-      [id, name, alcoholPercentage, price, rate, bottleCapacity, createdAt];
+  List<Object?> get props => [
+        id,
+        name,
+        alcoholPercentage,
+        price,
+        rate,
+        bottleCapacity,
+        createdAt,
+        type
+      ];
 
   Product copyWith({
     String? id,
@@ -50,6 +61,7 @@ class Product extends Equatable {
     double? bottleCapacity,
     DateTime? createdAt,
     double? rate,
+    String? type,
   }) {
     return Product(
       id: id ?? this.id,
@@ -59,6 +71,7 @@ class Product extends Equatable {
       bottleCapacity: bottleCapacity ?? this.bottleCapacity,
       createdAt: createdAt ?? this.createdAt,
       rate: rate ?? this.rate,
+      type: type ?? this.type,
     );
   }
 
@@ -71,6 +84,7 @@ class Product extends Equatable {
       'bottleCapacity': bottleCapacity,
       'createdAt': createdAt.millisecondsSinceEpoch,
       'rate': rate,
+      'type': type,
     };
   }
 
@@ -83,6 +97,7 @@ class Product extends Equatable {
       bottleCapacity: map['bottleCapacity'],
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
       rate: map['rate'],
+      type: map['type'],
     );
   }
 

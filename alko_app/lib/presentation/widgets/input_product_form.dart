@@ -1,5 +1,7 @@
 import 'package:alko_app/business_logic/cubit/product/product_cubit.dart';
-import 'package:alko_app/presentation/widgets/image_rating.dart';
+import 'package:alko_app/constants/assets.dart';
+import 'package:alko_app/constants/enums.dart';
+import 'package:alko_app/constants/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -13,7 +15,6 @@ class InputProductForm extends StatelessWidget {
   double rating = 3.0;
   final _formKey = GlobalKey<FormBuilderState>();
 
-//TODO!: make them all required except for price and rating
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -76,6 +77,13 @@ class InputProductForm extends StatelessWidget {
                     FormBuilderValidators.required(context),
                   ]),
                 ),
+                FormBuilderChoiceChip(
+                  name: 'Type',
+                  decoration: const InputDecoration(
+                    labelText: 'Select an option',
+                  ),
+                  options: parseToOptions(alcoholType),
+                ),
                 const SizedBox(height: 30),
                 FormBuilderTextField(
                   name: "Price",
@@ -85,6 +93,7 @@ class InputProductForm extends StatelessWidget {
                     labelText: "Price",
                   ),
                   validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(context),
                     FormBuilderValidators.match(
                         context, "[0-9][0-9]?[.,]?[0-9]?[0-9]?",
                         errorText: "Should be like 13 or 13.9"),
@@ -99,15 +108,18 @@ class InputProductForm extends StatelessWidget {
                   allowHalfRating: true,
                   itemCount: 5,
                   ratingWidget: RatingWidget(
-                    full: const ImageRating(
-                      imageName: 'heart.png',
-                      color: Colors.amberAccent,
+                    full: const Image(
+                      image: AssetImage(MyAssets.fullHeart),
+                      color: MyTheme.fullHeartColor,
                     ),
-                    half: const ImageRating(
-                      imageName: 'heart_half.png',
-                      color: Colors.redAccent,
+                    half: const Image(
+                      image: AssetImage(MyAssets.halfHeart),
+                      color: MyTheme.halfHeartColor,
                     ),
-                    empty: const ImageRating(imageName: 'heart_border.png'),
+                    empty: const Image(
+                      image: AssetImage(MyAssets.emptyHeart),
+                      color: MyTheme.emptyHeartColor,
+                    ),
                   ),
                   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                   onRatingUpdate: (rating) {
@@ -147,5 +159,17 @@ class InputProductForm extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<FormBuilderFieldOption<dynamic>> parseToOptions(List<String> strings) {
+    List<FormBuilderFieldOption<dynamic>> options = [];
+
+    for (var item in strings) {
+      options.add(FormBuilderFieldOption(
+        value: item,
+        child: Text(item),
+      ));
+    }
+    return options;
   }
 }
