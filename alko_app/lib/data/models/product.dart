@@ -14,7 +14,7 @@ class Product extends Equatable {
   final String name;
 
   @HiveField(2)
-  final double? price;
+  final double price;
 
   @HiveField(3)
   final double alcoholPercentage;
@@ -37,7 +37,7 @@ class Product extends Equatable {
       required this.rate,
       required this.id,
       required this.name,
-      this.price,
+      required this.price,
       required this.alcoholPercentage,
       required this.type});
 

@@ -1,3 +1,4 @@
+import 'package:alko_app/business_logic/cubit/filter/product_filter_cubit.dart';
 import 'package:alko_app/data/repositories/a_product_repository.dart';
 import 'package:alko_app/data/repositories/implementation/product_repository.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProductCubit(productRepository: productRepository),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProductFilterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ProductCubit(
+            productRepository: productRepository,
+            filterCubit: context.read<ProductFilterCubit>(),
+          ),
+        ),
+      ],
       child: MaterialApp(
         title: 'Alko check',
         theme: ThemeData(

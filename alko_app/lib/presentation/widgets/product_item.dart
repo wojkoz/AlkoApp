@@ -96,7 +96,7 @@ class ProductItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(getFormattedDateForItem(item.createdAt)),
-                    Text("Cost: ${item.price?.toStringAsFixed(2)}"),
+                    Text("Cost: ${item.price.toStringAsFixed(2)}"),
                   ],
                 ),
               ],
