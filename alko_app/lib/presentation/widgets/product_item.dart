@@ -66,9 +66,9 @@ class ProductItem extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    const FaIcon(
+                    FaIcon(
                       FontAwesomeIcons.beer,
-                      color: Colors.black,
+                      color: Colors.amber[600],
                     ),
                   ],
                 ),

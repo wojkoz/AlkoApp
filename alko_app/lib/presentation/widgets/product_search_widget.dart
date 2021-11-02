@@ -41,11 +41,17 @@ class _ProductSearchState extends State<ProductSearch> {
                         ),
                         maxLength: 20,
                         onChanged: (value) {
-                          if (value != null) {
+                          if (value != null && value.isNotEmpty) {
                             EasyDebounce.debounce("filter-name",
                                 const Duration(milliseconds: 500), () {
                               BlocProvider.of<ProductFilterCubit>(context)
                                   .filterByName(value);
+                            });
+                          } else {
+                            EasyDebounce.debounce("filter-name",
+                                const Duration(milliseconds: 500), () {
+                              BlocProvider.of<ProductFilterCubit>(context)
+                                  .resetFilter();
                             });
                           }
                         },

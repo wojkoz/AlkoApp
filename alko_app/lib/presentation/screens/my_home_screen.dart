@@ -44,6 +44,8 @@ class MyHomePage extends StatelessWidget {
                 builder: (context, state) {
                   if (state is ProductLoaded && state.products.isNotEmpty) {
                     return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.products.length,
                       itemBuilder: (context, index) =>
                           ProductItem(item: state.products[index]),

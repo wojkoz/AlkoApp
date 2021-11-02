@@ -1,5 +1,5 @@
 import 'package:alko_app/business_logic/cubit/filter/product_filter_cubit.dart';
-import 'package:alko_app/data/repositories/a_product_repository.dart';
+import 'package:alko_app/data/repositories/i_product_repository.dart';
 import 'package:alko_app/data/repositories/implementation/product_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final _appRouter = AppRouter();
-  final AProductRepository productRepository;
+  final IProductRepository productRepository;
 
   MyApp({Key? key, required this.productRepository}) : super(key: key);
 

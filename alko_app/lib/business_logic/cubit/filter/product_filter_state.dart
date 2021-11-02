@@ -30,12 +30,13 @@ class ProductFilterByName extends ProductFilterState {
 }
 
 class ProductFilterByDate extends ProductFilterState {
-  final DateTimeRange dateRange;
+  final DateTime start;
+  final DateTime end;
 
-  const ProductFilterByDate(this.dateRange);
+  const ProductFilterByDate(this.start, this.end);
 
   @override
-  List<Object> get props => [dateRange];
+  List<Object> get props => [start, end];
 }
 
 class ProductFilterByAlcoholPercentage extends ProductFilterState {

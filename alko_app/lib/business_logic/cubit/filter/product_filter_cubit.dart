@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 part 'product_filter_state.dart';
 
@@ -16,9 +15,7 @@ class ProductFilterCubit extends Cubit<ProductFilterState> {
   }
 
   void filterByDate(DateTime start, DateTime end) {
-    DateTimeRange range = DateTimeRange(start: start, end: end);
-
-    emit(ProductFilterByDate(range));
+    emit(ProductFilterByDate(start, end));
   }
 
   void filterByAlcoholPercentage(double start, {double? end}) {

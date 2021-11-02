@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:alko_app/business_logic/cubit/filter/product_filter_cubit.dart';
 import 'package:alko_app/data/models/product.dart';
-import 'package:alko_app/data/repositories/a_product_repository.dart';
+import 'package:alko_app/data/repositories/i_product_repository.dart';
+import 'package:alko_app/data/services/i_product_filter_service.dart';
+import 'package:alko_app/data/services/implementation/product_filter_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nanoid/async.dart';
@@ -10,7 +12,8 @@ import 'package:nanoid/async.dart';
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  final AProductRepository productRepository;
+  final IProductRepository productRepository;
+  final IProductFilterService _filterService = ProductFilterService();
   final ProductFilterCubit filterCubit;
   late StreamSubscription filterStreamSubscription;
 
@@ -22,24 +25,28 @@ class ProductCubit extends Cubit<ProductState> {
   StreamSubscription createFilterSubscription() {
     //(state as ProductLoaded).products.where((element) => false)
     return filterCubit.stream.listen((filterState) {
+      var productsTofilter = (state as ProductLoaded).products;
+
       if (filterState is ProductFilterReset) {
         getAllProducts();
       } else if (filterState is ProductFilterByType) {
-        emitProducts(
-            () => productRepository.getFilteredByType(filterState.type));
+        emitProducts(() =>
+            _filterService.filterByType(productsTofilter, filterState.type));
       } else if (filterState is ProductFilterByName) {
-        emitProducts(
-            () => productRepository.getFilteredByName(filterState.name));
+        filterState.name.isEmpty
+            ? getAllProducts()
+            : emitProducts(() => _filterService.filterByName(
+                productsTofilter, filterState.name));
       } else if (filterState is ProductFilterByDate) {
-        emitProducts(
-            () => productRepository.getFilteredByDate(filterState.dateRange));
+        emitProducts(() => _filterService.filterByDate(
+            productsTofilter, filterState.start, filterState.end));
       }
     });
   }
 
-  void emitProducts(Future<List<Product>> Function() getProducts) async {
+  void emitProducts(List<Product> Function() getProducts) {
     emit(ProductLoading());
-    List<Product> productsList = await getProducts();
+    List<Product> productsList = getProducts();
 
     emit(ProductLoaded(productsList));
   }
