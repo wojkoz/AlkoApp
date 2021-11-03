@@ -31,44 +31,43 @@ class MyHomePage extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            const ProductSearch(),
-            SizedBox(
-              height: safeAreaHeight,
-              width: MediaQuery.of(context).size.width,
-              child: BlocBuilder<ProductCubit, ProductState>(
-                builder: (context, state) {
-                  if (state is ProductLoaded && state.products.isNotEmpty) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.products.length,
-                      itemBuilder: (context, index) =>
-                          ProductItem(item: state.products[index]),
-                    );
-                  } else if (state is ProductLoading) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    context.read<ProductCubit>().getAllProducts();
-                    return const Padding(
-                      padding: EdgeInsets.only(top: 150),
-                      child: Text(
-                        "Nothing to show... yet :))",
-                        textAlign: TextAlign.center,
-                        softWrap: true,
-                        textScaleFactor: 3,
-                      ),
-                    );
-                  }
-                },
-              ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          const SizedBox(
+            height: 164,
+            child: ProductSearch(),
+          ),
+          SizedBox(
+            height: safeAreaHeight - 164,
+            width: MediaQuery.of(context).size.width,
+            child: BlocBuilder<ProductCubit, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoaded) {
+                  return ListView.builder(
+                    itemCount: state.products.length,
+                    itemBuilder: (context, index) =>
+                        ProductItem(item: state.products[index]),
+                  );
+                } else if (state is ProductLoading) {
+                  return const CircularProgressIndicator();
+                } else {
+                  context.read<ProductCubit>().getAllProducts();
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 150),
+                    child: Text(
+                      "Nothing to show... yet :))",
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      textScaleFactor: 3,
+                    ),
+                  );
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

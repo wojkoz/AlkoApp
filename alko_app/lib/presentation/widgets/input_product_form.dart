@@ -1,7 +1,7 @@
 import 'package:alko_app/business_logic/cubit/product/product_cubit.dart';
 import 'package:alko_app/constants/assets.dart';
-import 'package:alko_app/constants/enums.dart';
 import 'package:alko_app/constants/themes.dart';
+import 'package:alko_app/utils/chip_parse.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -82,7 +82,7 @@ class InputProductForm extends StatelessWidget {
                   decoration: const InputDecoration(
                     labelText: 'Select an option',
                   ),
-                  options: parseToOptions(alcoholType),
+                  options: getChipOptions(),
                 ),
                 const SizedBox(height: 30),
                 FormBuilderTextField(
@@ -159,17 +159,5 @@ class InputProductForm extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  List<FormBuilderFieldOption<dynamic>> parseToOptions(List<String> strings) {
-    List<FormBuilderFieldOption<dynamic>> options = [];
-
-    for (var item in strings) {
-      options.add(FormBuilderFieldOption(
-        value: item,
-        child: Text(item),
-      ));
-    }
-    return options;
   }
 }

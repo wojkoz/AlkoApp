@@ -23,7 +23,6 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   StreamSubscription createFilterSubscription() {
-    //(state as ProductLoaded).products.where((element) => false)
     return filterCubit.stream.listen((filterState) {
       var productsTofilter = (state as ProductLoaded).products;
 

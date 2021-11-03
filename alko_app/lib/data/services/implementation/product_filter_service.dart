@@ -23,16 +23,16 @@ class ProductFilterService implements IProductFilterService {
       List<Product> productsToFilter, DateTime start, DateTime end) {
     if (start.difference(end).inSeconds == 0) {
       return productsToFilter
-          .where((element) => element.createdAt.compareTo(start) == 0)
+          .where((element) => element.createdAt.day == start.day)
           .toList();
     }
 
     var filtered = productsToFilter
-        .where((element) => element.createdAt.compareTo(start) <= 0)
+        .where((element) => element.createdAt.compareTo(start) >= 0)
         .toList();
 
     return filtered
-        .where((element) => element.createdAt.compareTo(end) >= 0)
+        .where((element) => element.createdAt.compareTo(end) <= 0)
         .toList();
   }
 
