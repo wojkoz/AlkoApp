@@ -4,51 +4,36 @@ import 'package:alko_app/presentation/widgets/product_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyHomePage extends StatelessWidget {
-  final PreferredSizeWidget appBar;
-
-  const MyHomePage({
-    Key? key,
-    required this.appBar,
-  }) : super(key: key);
+class ProductMainScreen extends StatelessWidget {
+  const ProductMainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    var padding = MediaQuery.of(context).padding;
-    double safeAreaHeight =
-        height - padding.top - padding.bottom - appBar.preferredSize.height;
-
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        tooltip: "Add new",
-        backgroundColor: const Color(0xff03dac6),
-        foregroundColor: Colors.black,
-        onPressed: () {
-          Navigator.pushNamed(context, '/add-product');
-        },
-        child: const Icon(Icons.add),
-      ),
-      appBar: appBar,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    return Container(
+      height: height,
+      color: Colors.green,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           const SizedBox(
-            height: 164,
             child: ProductSearch(),
           ),
           SizedBox(
-            height: safeAreaHeight - 164,
-            width: MediaQuery.of(context).size.width,
+            height: height * 0.75,
+            width: width,
             child: BlocBuilder<ProductCubit, ProductState>(
               builder: (context, state) {
                 if (state is ProductLoaded) {
-                  return ListView.builder(
-                    itemCount: state.products.length,
-                    itemBuilder: (context, index) =>
-                        ProductItem(item: state.products[index]),
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: ListView.builder(
+                      itemCount: state.products.length,
+                      itemBuilder: (context, index) =>
+                          ProductItem(item: state.products[index]),
+                    ),
                   );
                 } else if (state is ProductLoading) {
                   return const CircularProgressIndicator();
