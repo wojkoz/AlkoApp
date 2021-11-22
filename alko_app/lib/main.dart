@@ -1,4 +1,5 @@
 import 'package:alko_app/business_logic/cubit/filter/product_filter_cubit.dart';
+import 'package:alko_app/business_logic/cubit/general_info/general_info_cubit.dart';
 import 'package:alko_app/data/repositories/i_product_repository.dart';
 import 'package:alko_app/data/repositories/implementation/product_repository.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
 
-  // HydratedBloc.storage = await HydratedStorage.build(
-  //   storageDirectory: await getApplicationDocumentsDirectory(),
-  // );
   runApp(MyApp(
     productRepository: ProductRepository(),
   ));
@@ -38,6 +36,11 @@ class MyApp extends StatelessWidget {
           create: (context) => ProductCubit(
             productRepository: productRepository,
             filterCubit: context.read<ProductFilterCubit>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => GeneralInfoCubit(
+            productRepository: productRepository,
           ),
         ),
       ],

@@ -36,7 +36,6 @@ dependencies:
   flutter_bloc: ^7.3.0
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  hydrated_bloc: ^7.1.0
   path_provider: ^2.0.5
   nanoid: ^1.0.0
   flutter_form_builder: ^6.1.0+1
