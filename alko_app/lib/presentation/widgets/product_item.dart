@@ -1,7 +1,6 @@
 import 'package:alko_app/data/models/product.dart';
 import 'package:alko_app/presentation/widgets/generate_rating_icons.dart';
 import 'package:alko_app/utils/date_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

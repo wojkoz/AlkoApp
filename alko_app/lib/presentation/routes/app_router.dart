@@ -2,7 +2,6 @@ import 'package:alko_app/constants/routes.dart';
 import 'package:alko_app/presentation/screens/main_screen.dart';
 import 'package:alko_app/presentation/screens/product_input_screen.dart';
 import 'package:alko_app/presentation/widgets/app_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
