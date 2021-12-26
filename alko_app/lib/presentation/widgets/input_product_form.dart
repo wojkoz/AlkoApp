@@ -9,11 +9,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
-// ignore: must_be_immutable
-class InputProductForm extends StatelessWidget {
-  InputProductForm({Key? key}) : super(key: key);
+class InputProductForm extends StatefulWidget {
+  const InputProductForm({Key? key}) : super(key: key);
 
+  @override
+  State<InputProductForm> createState() => _InputProductFormState();
+}
+
+class _InputProductFormState extends State<InputProductForm> {
   double rating = 3.0;
+
   final _formKey = GlobalKey<FormBuilderState>();
 
   @override
